@@ -5,15 +5,20 @@ var React = require('react-native');
 var {
   StyleSheet,
   Text,
+  AppRegistry,
   View,
+  Image,
   TouchableHighlight,
   WebView
 } = React;
-
+var Carousel = require('react-native-looped-carousel');
 var api = require("../../Network/api.js");
-
+var PromoImage = require('./js/components/PromoImage');
 var RefreshableListView = require("../../Components/RefreshableListView");
 var Comment = require("./Elements/Comment");
+var Dimensions = require('Dimensions');
+var InAppUtils = require('react-native').NativeModules.InAppUtils;
+var {width, height} = Dimensions.get('window');
 
 
 var Web = React.createClass({
@@ -51,20 +56,18 @@ module.exports = React.createClass({
   },
   renderListViewHeader: function(){
     var atom = this.props.post.summarylong;
+    var style = {};
+    var pages = [<PromoImage
+                  key="promo1"
+                  image={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+                  header="Be aware"
+                  description="of everything that happens to your flight"
+                  promoText="Get Text messages or Push for every flight status change"
+                  style={styles.pageStyle}
+                />];
     return(
 		<View style={styles.headerContainer}>
-			<Text style={styles.headerTitle}>
-				{this.props.post.title}
-			</Text>
-      {this.renderPostText()}
-      {this.renderSourceButton()}
-			<Text style={styles.headerPostDetailsLine}>
-				{this.props.post.link}
-			</Text>
-			<View style={styles.separator}/>
-			<Text style={styles.headerCommentTitle}>
-				{this.props.post.descendants} Comments:
-			</Text>
+      {pages}
 		</View>
     );
   },
@@ -156,6 +159,11 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     paddingRight: 10,
     paddingLeft: 10,
+    alignItems: 'stretch',
+  },
+  pageStyle: {
+    width: width,
+    height: height
   },
   headerTitle:{
     fontSize: 20,
@@ -188,4 +196,7 @@ var styles = StyleSheet.create({
     color: 'gray',
     marginTop: 10
   },
+  image: {
+  flex: 1
+},
 });
