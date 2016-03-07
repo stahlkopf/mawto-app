@@ -51,9 +51,9 @@ var styles = StyleSheet.create({
     textAlign: 'center'
   },
   promoHeader: {
-    fontSize: 42,
-    fontWeight: '700',
-    alignSelf: 'center'
+    fontSize: 22,
+    fontWeight: '300',
+    textAlign: 'center'
   },
   promoDescription: {
     fontSize: 22,
@@ -63,10 +63,11 @@ var styles = StyleSheet.create({
   },
   promoText: {
     fontSize: 14,
+    backgroundColor: 'rgba(0,0,0,.6)',
     fontWeight: '400',
-    alignSelf: 'center',
-    lineHeight: 22,
-    width: 220,
+    paddingRight: 5,
+    paddingLeft: 5,
+    textAlign: 'left',
   },
 });
 

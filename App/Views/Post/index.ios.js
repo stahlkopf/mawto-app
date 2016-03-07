@@ -33,13 +33,7 @@ var Web = React.createClass({
 
 module.exports = React.createClass({
   render: function(){
-    return(
-        <RefreshableListView renderRow={(row)=>this.renderListViewRow(row)}
-        					           renderHeader={this.renderListViewHeader}
-                             onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback)}
-                             backgroundColor={'#F6F6EF'}
-                             loadMoreText={'Load More...'}/>
-    );
+    return(this.renderListViewHeader());
   },
 
   renderListViewRow: function(row){
@@ -58,11 +52,11 @@ module.exports = React.createClass({
     var atom = this.props.post.summarylong;
     var style = {};
     var pages = [<PromoImage
-                  key="promo1"
-                  image={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
-                  header="Be aware"
-                  description="of everything that happens to your flight"
-                  promoText="Get Text messages or Push for every flight status change"
+                  key="mawto"
+                  image={{uri: this.props.post.top_image}}
+                  header={this.props.post.title}
+                  description=""
+                  promoText={this.renderPostText()}
                   style={styles.pageStyle}
                 />];
     return(
@@ -80,7 +74,7 @@ module.exports = React.createClass({
       output.push(this.props.post.summarylong[i]+"\r\n"+"\r\n");
     }
     return(
-      <Text style={styles.headerPostText}>
+      <Text>
         {output}
       </Text>
     );
@@ -153,12 +147,15 @@ module.exports = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  main: {
+    flex: 1
+  },
   headerContainer: {
     flex:1,
-    backgroundColor: '#F6F6EF',
+    backgroundColor: 'transparent',
     flexDirection: 'column',
-    paddingRight: 10,
-    paddingLeft: 10,
+    paddingRight: 5,
+    paddingLeft: 5,
     alignItems: 'stretch',
   },
   pageStyle: {
@@ -173,9 +170,9 @@ var styles = StyleSheet.create({
     color: '#FF6600',
   },
   headerPostText:{
-    fontSize: 14,
-    marginBottom: 3,
-    paddingBottom: 10,
+    fontSize: 15,
+    marginBottom: 5,
+    paddingBottom: 5,
   },
   headerSourceLabel:{
     fontSize: 15,
