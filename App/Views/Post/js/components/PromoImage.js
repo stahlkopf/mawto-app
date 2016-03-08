@@ -29,12 +29,21 @@ var PromoImage = React.createClass({
           <Text style={[styles.text, styles.promoHeader]}>{this.props.header}</Text>
           <Text style={[styles.text, styles.promoDescription]}>{this.props.description}</Text>
           <Line style={{backgroundColor:'#0ea378'}} />
-          <Text style={[styles.text, styles.promoText]}>{this.props.promoText}</Text>
+          <Text>{this.props.promoText}</Text>
         </View>
       </Image>
     );
+  },
+  renderAtoms: function(atomRows){
+    console.log("CALLED ONCE");
+    for(var i in atomb) {
+        console.log("LOOPING");
+        <Text style={[styles.text, styles.promoText]}>{atomRows[i]}</Text>
+      }
+
   }
-});
+}
+);
 
 var styles = StyleSheet.create({
   usecase: {
@@ -62,11 +71,9 @@ var styles = StyleSheet.create({
     alignSelf: 'center',
   },
   promoText: {
-    fontSize: 14,
-    backgroundColor: 'rgba(0,0,0,.6)',
+    fontSize: 15,
+    color: 'white',
     fontWeight: '400',
-    paddingRight: 5,
-    paddingLeft: 5,
     textAlign: 'left',
   },
 });

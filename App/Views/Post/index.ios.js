@@ -49,7 +49,6 @@ module.exports = React.createClass({
   	);
   },
   renderListViewHeader: function(){
-    var atom = this.props.post.summarylong;
     var style = {};
     var pages = [<PromoImage
                   key="mawto"
@@ -66,18 +65,26 @@ module.exports = React.createClass({
     );
   },
   renderPostText: function(){
-    var output = [];
+    var atoms = []
     if(!this.props.post.summarylong){
       return null;
     }
-    for(var i = 0; i < this.props.post.summarylong.length; i++) {
-      output.push(this.props.post.summarylong[i]+"\r\n"+"\r\n");
+    for(var i in this.props.post.summarylong) {
+      console.log(i);
+      atoms.push(
+          <Text key={this.props.post.id+"-"+i} style={styles.headerPostText}>
+          {this.props.post.summarylong[i]}
+          </Text>
+          );
+      atoms.push(
+          <Text key={"blankline"+"-"+i} style={styles.main}>
+          {"\r\n"}
+          {"\r\n"}
+          </Text>
+          );
+
     }
-    return(
-      <Text>
-        {output}
-      </Text>
-    );
+    return atoms;
   },
   renderSourceButton: function(){
     if(!this.props.post.link){
@@ -170,9 +177,12 @@ var styles = StyleSheet.create({
     color: '#FF6600',
   },
   headerPostText:{
+    flex: 1,
+    color: 'white',
     fontSize: 15,
     marginBottom: 5,
     paddingBottom: 5,
+    backgroundColor: 'rgba(0,0,0,.6)'
   },
   headerSourceLabel:{
     fontSize: 15,
