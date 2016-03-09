@@ -33,35 +33,41 @@ var Web = React.createClass({
 
 module.exports = React.createClass({
   render: function(){
-    return(this.renderListViewHeader());
-  },
-
-  renderListViewRow: function(row){
-  	if(row.count==this.props.post.kids.length){
-      return(
-        <View style={{paddingBottom: 20}}>
-          <Comment data={row}/>
-        </View>
-      );
-    }
-    return(
-  		<Comment data={row}/>
-  	);
-  },
-  renderListViewHeader: function(){
     var style = {};
+    var atoms = [];
+    if(this.props.post.summarylong){
+      for(var i in this.props.post.summarylong) {
+        atoms.push(
+                <View key={this.props.post.id+"-"+i} style={{backgroundColor: 'rgba(0,0,0,.6)', justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    flex: 1,}}>
+                <Text style={{color: 'white', fontSize: 15}}>
+                {this.props.post.summarylong[i]}
+                </Text>
+                </View>
+                );
+            atoms.push(
+                <Text key={"blankline"+"-"+i}>
+                {"\r\n"}
+                {"\r\n"}
+                </Text>
+                );
+              }
+          }
     var pages = [<PromoImage
                   key="mawto"
                   image={{uri: this.props.post.top_image}}
                   header={this.props.post.title}
                   description=""
-                  promoText={this.renderPostText()}
+                  promoText={atoms}
                   style={styles.pageStyle}
                 />];
+
     return(
-		<View style={styles.headerContainer}>
-      {pages}
-		</View>
+      <View>
+        {pages}
+      </View>
     );
   },
   renderPostText: function(){
@@ -70,11 +76,12 @@ module.exports = React.createClass({
       return null;
     }
     for(var i in this.props.post.summarylong) {
-      console.log(i);
       atoms.push(
-          <Text key={this.props.post.id+"-"+i} style={styles.headerPostText}>
+          <View key={this.props.post.id+"-"+i} style={styles.atomsBackground}>
+          <Text style={{color: 'white', fontSize: 15,}}>
           {this.props.post.summarylong[i]}
           </Text>
+          </View>
           );
       atoms.push(
           <Text key={"blankline"+"-"+i} style={styles.main}>
@@ -82,7 +89,6 @@ module.exports = React.createClass({
           {"\r\n"}
           </Text>
           );
-
     }
     return atoms;
   },
@@ -93,7 +99,7 @@ module.exports = React.createClass({
     return(
       <TouchableHighlight onPress={() => this.pushSourceWebpage()}
                           underlayColor='#F6F6EF'>
-        <Text style={styles.headerSourceLabel}>
+        <Text style={styles.atomsSourceLabel}>
           (Source)
         </Text>
       </TouchableHighlight>
@@ -157,51 +163,36 @@ var styles = StyleSheet.create({
   main: {
     flex: 1
   },
-  headerContainer: {
+  atomsContainer: {
     flex:1,
     backgroundColor: 'transparent',
     flexDirection: 'column',
-    paddingRight: 5,
-    paddingLeft: 5,
     alignItems: 'stretch',
   },
   pageStyle: {
     width: width,
     height: height
   },
-  headerTitle:{
+  atomsTitle:{
     fontSize: 20,
     textAlign: 'left',
     marginTop: 10,
     marginBottom: 10,
     color: '#FF6600',
   },
-  headerPostText:{
-    flex: 1,
+  atomsBackground:{
+    backgroundColor: 'rgba(0,0,0,.6)',
+    margin: 5,
+  },
+  atomsPostText:{
     color: 'white',
     fontSize: 15,
-    marginBottom: 5,
-    paddingBottom: 5,
-    backgroundColor: 'rgba(0,0,0,.6)'
   },
-  headerSourceLabel:{
+  atomsSourceLabel:{
     fontSize: 15,
     textAlign: 'left',
     color: '#0089FF',
     paddingBottom: 10,
-  },
-  headerPostDetailsLine: {
-    fontSize: 12,
-    marginBottom: 10,
-    color: 'gray',
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#CCCCCC',
-  },
-  headerCommentTitle: {
-    color: 'gray',
-    marginTop: 10
   },
   image: {
   flex: 1

@@ -22,14 +22,11 @@ var PromoImage = React.createClass({
   render: function() {
     return (
       <Image
-        style={[this.props.style, styles.usecase]}
+        style={this.props.style}
         source={this.props.image}
       >
-        <View style={styles.promoView}>
-          <Text style={[styles.text, styles.promoHeader]}>{this.props.header}</Text>
-          <Text style={[styles.text, styles.promoDescription]}>{this.props.description}</Text>
-          <Line style={{backgroundColor:'#0ea378'}} />
-          {this.props.promoText}
+        <View>
+          <Text>{this.props.promoText}</Text>
         </View>
       </Image>
     );
@@ -63,10 +60,7 @@ var styles = StyleSheet.create({
     alignSelf: 'center',
   },
   promoText: {
-    marginLeft: 5,
-    paddingLeft: 5,
-    marginRight: 5,
-    paddingRight: 5,
+
   },
 });
 
