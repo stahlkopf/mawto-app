@@ -38,21 +38,20 @@ module.exports = React.createClass({
     if(this.props.post.summarylong){
       for(var i in this.props.post.summarylong) {
         atoms.push(
-                <View key={this.props.post.id+"-"+i} style={{backgroundColor: 'rgba(0,0,0,.6)', justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    flex: 1,}}>
-                <Text style={{color: 'white', fontSize: 15}}>
-                {this.props.post.summarylong[i]}
-                </Text>
+                <View key={this.props.post.id+"-"+i} >
+                  <View style={{backgroundColor: 'rgba(0,0,0,.6)', width: width}}>
+                    <Text style={{color: 'white', fontSize: 15, paddingLeft: 5, paddingRight:1}}>
+                      {this.props.post.summarylong[i]}
+                    </Text>
+                    </View>
+                    <View style={{backgroundColor: 'transparent'}}>
+                      <Text>
+                      {"\n"}
+                      </Text>
+                    </View>
                 </View>
                 );
-            atoms.push(
-                <Text key={"blankline"+"-"+i}>
-                {"\r\n"}
-                {"\r\n"}
-                </Text>
-                );
+
               }
           }
     var pages = [<PromoImage
@@ -61,48 +60,29 @@ module.exports = React.createClass({
                   header={this.props.post.title}
                   description=""
                   promoText={atoms}
+                  source={this.renderSourceButton()}
                   style={styles.pageStyle}
                 />];
 
     return(
-      <View>
+      <View style={styles.main}>
         {pages}
       </View>
     );
-  },
-  renderPostText: function(){
-    var atoms = []
-    if(!this.props.post.summarylong){
-      return null;
-    }
-    for(var i in this.props.post.summarylong) {
-      atoms.push(
-          <View key={this.props.post.id+"-"+i} style={styles.atomsBackground}>
-          <Text style={{color: 'white', fontSize: 15,}}>
-          {this.props.post.summarylong[i]}
-          </Text>
-          </View>
-          );
-      atoms.push(
-          <Text key={"blankline"+"-"+i} style={styles.main}>
-          {"\r\n"}
-          {"\r\n"}
-          </Text>
-          );
-    }
-    return atoms;
   },
   renderSourceButton: function(){
     if(!this.props.post.link){
       return null;
     }
     return(
+      <View style={styles.atomsSourceLabel}>
       <TouchableHighlight onPress={() => this.pushSourceWebpage()}
                           underlayColor='#F6F6EF'>
-        <Text style={styles.atomsSourceLabel}>
+        <Text style={styles.atomsPostText}>
           (Source)
         </Text>
       </TouchableHighlight>
+      </View>
     );
   },
   listViewOnRefresh: function(page, callback){
@@ -175,9 +155,10 @@ var styles = StyleSheet.create({
   },
   atomsTitle:{
     fontSize: 20,
-    textAlign: 'left',
+    textAlign: 'center',
     marginTop: 10,
     marginBottom: 10,
+
     color: '#FF6600',
   },
   atomsBackground:{
@@ -187,12 +168,12 @@ var styles = StyleSheet.create({
   atomsPostText:{
     color: 'white',
     fontSize: 15,
+
   },
   atomsSourceLabel:{
-    fontSize: 15,
-    textAlign: 'left',
-    color: '#0089FF',
-    paddingBottom: 10,
+    flex:1,
+
+    alignSelf: 'flex-end',
   },
   image: {
   flex: 1

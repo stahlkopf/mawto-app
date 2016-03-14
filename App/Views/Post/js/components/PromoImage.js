@@ -19,6 +19,7 @@ var PromoImage = React.createClass({
   propType: {
     style: View.propTypes.style,
   },
+
   render: function() {
     return (
       <Image
@@ -26,10 +27,13 @@ var PromoImage = React.createClass({
         source={this.props.image}
       >
         <View style={styles.promoView}>
-          <Text style={[styles.text, styles.promoHeader]}>{this.props.header}</Text>
+          <Text style={[styles.text, styles.promoHeader]}>
+          {this.props.header}
+          </Text>
           <Text style={[styles.text, styles.promoDescription]}>{this.props.description}</Text>
           <Line style={{backgroundColor:'#0ea378'}} />
           {this.props.promoText}
+          {this.props.source}
         </View>
       </Image>
     );
@@ -49,12 +53,21 @@ var styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    textAlign: 'center'
+    textAlign: 'center',
   },
-  promoHeader: {
+  textBG: {
+    color: 'white',
     fontSize: 22,
     fontWeight: '300',
-    textAlign: 'center'
+    alignSelf: 'center',
+  },
+  promoHeader: {
+    marginTop: 50,
+    backgroundColor: 'rgba(0,0,0,.6)',
+    color: 'white',
+    fontSize: 22,
+    fontWeight: '300',
+    alignSelf: 'center',
   },
   promoDescription: {
     fontSize: 22,

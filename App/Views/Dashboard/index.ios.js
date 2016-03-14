@@ -25,30 +25,9 @@ module.exports = React.createClass({
   },
   render: function(){
     return(
-      <TabBar structure={[{
-                            title: 'Ask HN',
-                            iconName: 'comment',
-                            renderContent: () => {return(
-                              <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Ask Story')}
-                                                   onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_ASK_STORIES_ENDPOINT)}
-                                                   backgroundColor={'#F6F6EF'}
-                                                   loadMoreText={'Load More...'}
-                                                   style={styles.listview}/>
-                            );}
-                          },
+      <TabBar structure={[
                           {
-                            title: 'Show HN',
-                            iconName: 'eye',
-                            renderContent: () => {return(
-                              <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Show Story')}
-                                                   onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_SHOW_STORIES_ENDPOINT)}
-                                                   backgroundColor={'#F6F6EF'}
-                                                   loadMoreText={'Load More...'}
-                                                   style={styles.listview}/>
-                            );}
-                          },
-                          {
-                            title: 'Front Page',
+                            title: 'Home',
                             iconName: 'star',
                             renderContent: () => {return(
                               <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Top Story')}
@@ -80,7 +59,7 @@ module.exports = React.createClass({
                                                    style={styles.listview}/>
                             );}
                           }]}
-              selectedTab={2}
+              selectedTab={0}
               activeTintColor={'#ff8533'}
               iconSize={25}/>
     );
