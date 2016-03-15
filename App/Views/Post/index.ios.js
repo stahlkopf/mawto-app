@@ -34,42 +34,42 @@ var Web = React.createClass({
 module.exports = React.createClass({
   render: function(){
     var style = {};
-    var atoms = [];
-    if(this.props.post.summarylong){
-      for(var i in this.props.post.summarylong) {
-        atoms.push(
-                <View key={this.props.post.id+"-"+i} >
-                  <View style={{backgroundColor: 'rgba(0,0,0,.6)', width: width}}>
-                    <Text style={{color: 'white', fontSize: 15, paddingLeft: 5, paddingRight:1}}>
-                      {this.props.post.summarylong[i]}
-                    </Text>
-                    </View>
-                    <View style={{backgroundColor: 'transparent'}}>
-                      <Text>
-                      {"\n"}
-                      </Text>
-                    </View>
-                </View>
-                );
 
-              }
-          }
-    var pages = [<PromoImage
-                  key="mawto"
-                  image={{uri: this.props.post.top_image}}
-                  header={this.props.post.title}
-                  description=""
-                  promoText={atoms}
-                  source={this.renderSourceButton()}
-                  style={styles.pageStyle}
-                />];
+
 
     return(
-      <View style={styles.main}>
-        {pages}
-      </View>
+      <RefreshableListView renderRow={(row)=>this.renderListViewRow(row)}
+        					           renderHeader={this.renderListViewHeader}
+                             onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback)}
+                             loadMoreText={'Load More...'}/>
+
     );
   },
+  renderListViewRow: function(row){
+  console.log(row);
+  console.log("FUCK YOU");
+  return(
+    <Text style={styles.rowTitle}>
+        {row}
+    </Text>
+  );
+},
+renderListViewHeader: function(){
+  var pages = [<PromoImage
+                key="mawto"
+                image={{uri: this.props.post.top_image}}
+                header={this.props.post.title}
+                description=""
+                promoText={this.renderAtoms()}
+                source={this.renderSourceButton()}
+                style={styles.pageStyle}
+              />];
+   return(
+     <View style={styles.main}>
+     {pages}
+   </View>
+   );
+ },
   renderSourceButton: function(){
     if(!this.props.post.link){
       return null;
@@ -85,16 +85,47 @@ module.exports = React.createClass({
       </View>
     );
   },
+  renderAtoms: function(){
+
+    if(!this.props.post.summarylong){
+      return null;
+    }
+    var atoms = [];
+    if(this.props.post.summarylong){
+      for(var i in this.props.post.summarylong) {
+        atoms.push(
+                <View key={this.props.post.id+"-"+i} >
+                  <View style={{backgroundColor: 'rgba(0,0,0,.6)', width: width}}>
+                    <Text style={{color: 'white', fontSize: 15, paddingLeft: 5, paddingRight:1}}>
+
+                    </Text>
+                    </View>
+                    <View style={{backgroundColor: 'transparent'}}>
+                      <Text>
+                      {"\n"}
+                      </Text>
+                    </View>
+                </View>
+                );
+
+              }
+
+          }
+          return atoms;
+
+  },
   listViewOnRefresh: function(page, callback){
-    if(!this.props.post.kids){
+    if(!this.props.post.summarylong){
       callback([], {allLoaded: true})
     }
-    else if(page!=1){
-      this.fetchCommentsUsingKids(this.props.post.kids, this.state.lastIndex, 3, callback);
+    var atoms = [];
+    if(this.props.post.summarylong){
+      for(var i in this.props.post.summarylong) {
+        atoms.push(this.props.post.summarylong[i])
+      }
     }
-    else{
-  	 this.fetchCommentsUsingKids(this.props.post.kids, 0, 3, callback);
-    }
+    callback(atoms, {allLoaded: true})
+
   },
   fetchCommentsUsingKids: function(kids, startIndex, amountToAdd, callback){
     var rowsData = [];
