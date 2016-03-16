@@ -34,42 +34,43 @@ var Web = React.createClass({
 module.exports = React.createClass({
   render: function(){
     var style = {};
+    var atoms = this.listAtoms();
 
-
+    console.log(atoms);
+    console.log('*********');
+    var pages = [<PromoImage
+                  key="mawto"
+                  image={{uri: this.props.post.top_image}}
+                  header={this.props.post.title}
+                  description=""
+                  promoText={this.renderAtoms(atoms)}
+                  source={this.renderSourceButton()}
+                  style={styles.pageStyle}
+                />];
 
     return(
-      <RefreshableListView renderRow={(row)=>this.renderListViewRow(row)}
-        					           renderHeader={this.renderListViewHeader}
-                             onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback)}
-                             loadMoreText={'Load More...'}/>
-
+      <View style={styles.main}>
+      {pages}
+      </View>
     );
   },
   renderListViewRow: function(row){
-  console.log(row);
-  console.log("FUCK YOU");
   return(
-    <Text style={styles.rowTitle}>
-        {row}
-    </Text>
+    <View>
+      <View style={{backgroundColor: 'rgba(0,0,0,.6)', width: width}}>
+        <Text style={{color: 'white', fontSize: 15, paddingLeft: 5, paddingRight:1}}>
+         {row}
+        </Text>
+        </View>
+        <View style={{backgroundColor: 'transparent'}}>
+          <Text>
+          {"\n"}
+          </Text>
+        </View>
+    </View>
+
   );
 },
-renderListViewHeader: function(){
-  var pages = [<PromoImage
-                key="mawto"
-                image={{uri: this.props.post.top_image}}
-                header={this.props.post.title}
-                description=""
-                promoText={this.renderAtoms()}
-                source={this.renderSourceButton()}
-                style={styles.pageStyle}
-              />];
-   return(
-     <View style={styles.main}>
-     {pages}
-   </View>
-   );
- },
   renderSourceButton: function(){
     if(!this.props.post.link){
       return null;
@@ -85,38 +86,33 @@ renderListViewHeader: function(){
       </View>
     );
   },
-  renderAtoms: function(){
-
-    if(!this.props.post.summarylong){
+  renderAtoms: function(atoms){
+    if(!atoms){
       return null;
     }
-    var atoms = [];
-    if(this.props.post.summarylong){
-      for(var i in this.props.post.summarylong) {
-        atoms.push(
-                <View key={this.props.post.id+"-"+i} >
-                  <View style={{backgroundColor: 'rgba(0,0,0,.6)', width: width}}>
-                    <Text style={{color: 'white', fontSize: 15, paddingLeft: 5, paddingRight:1}}>
-
-                    </Text>
-                    </View>
-                    <View style={{backgroundColor: 'transparent'}}>
-                      <Text>
-                      {"\n"}
-                      </Text>
-                    </View>
-                </View>
-                );
-
-              }
-
-          }
-          return atoms;
+    var atomsList = []
+      for(var i in atoms) {
+        atomsList.push(
+         <View key={this.props.post.id+"-"+i} >
+          <View style={{backgroundColor: 'rgba(0,0,0,.6)', width: width}}>
+            <Text style={{color: 'white', fontSize: 15, paddingLeft: 5, paddingRight:1}}>
+             {atoms[i]}
+            </Text>
+            </View>
+            <View style={{backgroundColor: 'transparent'}}>
+              <Text>
+              {"\n"}
+              </Text>
+            </View>
+        </View>
+      )
+      }
+      return atomsList;
 
   },
-  listViewOnRefresh: function(page, callback){
+  listAtoms: function(){
     if(!this.props.post.summarylong){
-      callback([], {allLoaded: true})
+      return null;
     }
     var atoms = [];
     if(this.props.post.summarylong){
@@ -124,7 +120,7 @@ renderListViewHeader: function(){
         atoms.push(this.props.post.summarylong[i])
       }
     }
-    callback(atoms, {allLoaded: true})
+    return atoms;
 
   },
   fetchCommentsUsingKids: function(kids, startIndex, amountToAdd, callback){
