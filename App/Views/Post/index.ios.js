@@ -34,24 +34,19 @@ var Web = React.createClass({
 module.exports = React.createClass({
   render: function(){
     var style = {};
-    var atoms = this.listAtoms();
-
-    console.log(atoms);
-    console.log('*********');
-    var pages = [<PromoImage
-                  key="mawto"
-                  image={{uri: this.props.post.top_image}}
-                  header={this.props.post.title}
-                  description=""
-                  promoText={this.renderAtoms(atoms)}
-                  source={this.renderSourceButton()}
-                  style={styles.pageStyle}
-                />];
 
     return(
-      <View style={styles.main}>
-      {pages}
-      </View>
+      <Image source={{uri: this.props.post.top_image}} style={styles.atomsContainer}>
+    <View style={styles.promoView}>
+      <RefreshableListView renderRow={(row)=>this.renderListViewRow(row)}
+      renderHeader={this.renderListViewHeader}
+                     onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback)}
+                     backgroundColor={'transparent'}
+                     loadMoreText={'Load More...'}/>
+           {this.renderSourceButton()}
+    </View>
+      </Image>
+
     );
   },
   renderListViewRow: function(row){
@@ -71,6 +66,15 @@ module.exports = React.createClass({
 
   );
 },
+renderListViewHeader: function(){
+  return(
+  <View style={styles.headerContainer}>
+  <Text style={styles.atomsTitle}>
+    {this.props.post.title}
+  </Text>
+  </View>
+  );
+},
   renderSourceButton: function(){
     if(!this.props.post.link){
       return null;
@@ -86,42 +90,18 @@ module.exports = React.createClass({
       </View>
     );
   },
-  renderAtoms: function(atoms){
-    if(!atoms){
-      return null;
-    }
-    var atomsList = []
-      for(var i in atoms) {
-        atomsList.push(
-         <View key={this.props.post.id+"-"+i} >
-          <View style={{backgroundColor: 'rgba(0,0,0,.6)', width: width}}>
-            <Text style={{color: 'white', fontSize: 15, paddingLeft: 5, paddingRight:1}}>
-             {atoms[i]}
-            </Text>
-            </View>
-            <View style={{backgroundColor: 'transparent'}}>
-              <Text>
-              {"\n"}
-              </Text>
-            </View>
-        </View>
-      )
-      }
-      return atomsList;
 
-  },
-  listAtoms: function(){
+  listViewOnRefresh: function(page, callback){
     if(!this.props.post.summarylong){
-      return null;
+      callback([], {allLoaded: true})
     }
     var atoms = [];
     if(this.props.post.summarylong){
       for(var i in this.props.post.summarylong) {
         atoms.push(this.props.post.summarylong[i])
       }
+    callback(atoms, {allLoaded: true})
     }
-    return atoms;
-
   },
   fetchCommentsUsingKids: function(kids, startIndex, amountToAdd, callback){
     var rowsData = [];
@@ -167,14 +147,21 @@ module.exports = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  main: {
-    flex: 1
+  headerContainer: {
+    flex:1,
+    paddingRight: 10,
+    paddingLeft: 10,
+    paddingBottom: 20,
+    paddingTop: 5,
   },
   atomsContainer: {
-    flex:1,
-    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'column',
-    alignItems: 'stretch',
+    flex: 1,
+    // remove width and height to override fixed static size
+    width: null,
+    height: null,
   },
   pageStyle: {
     width: width,
@@ -183,9 +170,6 @@ var styles = StyleSheet.create({
   atomsTitle:{
     fontSize: 20,
     textAlign: 'center',
-    marginTop: 10,
-    marginBottom: 10,
-
     color: '#FF6600',
   },
   atomsBackground:{
@@ -195,14 +179,13 @@ var styles = StyleSheet.create({
   atomsPostText:{
     color: 'white',
     fontSize: 15,
-
   },
   atomsSourceLabel:{
-    flex:1,
-
     alignSelf: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  image: {
-  flex: 1
+promoView: {
+  backgroundColor: 'transparent',
 },
-});
+})

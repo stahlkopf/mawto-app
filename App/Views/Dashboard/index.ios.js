@@ -25,43 +25,11 @@ module.exports = React.createClass({
   },
   render: function(){
     return(
-      <TabBar structure={[
-                          {
-                            title: 'Home',
-                            iconName: 'star',
-                            renderContent: () => {return(
                               <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Top Story')}
                                                    onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.MAWTO_ARTICLE_IDS)}
                                                    backgroundColor={'#F6F6EF'}
                                                    loadMoreText={'Load More...'}
                                                    style={styles.listview}/>
-                            );}
-                          },
-                          {
-                            title: 'New',
-                            iconName: 'level-up',
-                            renderContent: () => {return(
-                              <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'New Story')}
-                                                   onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_NEW_STORIES_ENDPOINT)}
-                                                   backgroundColor={'#F6F6EF'}
-                                                   loadMoreText={'Load More...'}
-                                                   style={styles.listview}/>
-                            );}
-                          },
-                          {
-                            title: 'Jobs',
-                            iconName: 'suitcase',
-                            renderContent: () => {return(
-                              <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Job Post')}
-                                                   onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_JOB_STORIES_ENDPOINT)}
-                                                   backgroundColor={'#F6F6EF'}
-                                                   loadMoreText={'Load More...'}
-                                                   style={styles.listview}/>
-                            );}
-                          }]}
-              selectedTab={0}
-              activeTintColor={'#ff8533'}
-              iconSize={25}/>
     );
   },
   renderListViewRow: function(row, pushNavBarTitle){
@@ -128,7 +96,7 @@ module.exports = React.createClass({
   },
   selectRow: function(row, pushNavBarTitle){
     this.props.navigator.push({
-      title: pushNavBarTitle+' #'+row.count,
+      title: "",
       component: Post,
       passProps: {post: row},
       backButtonTitle: 'Back',
@@ -167,7 +135,7 @@ var styles = StyleSheet.create({
         color: 'gray',
     },
     listview: {
-      marginBottom:49
+      marginBottom:0
     },
     separator: {
         height: 1,
