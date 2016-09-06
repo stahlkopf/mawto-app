@@ -25,16 +25,16 @@ module.exports = React.createClass({
   },
   render: function(){
     return(
-                              <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Top Story')}
-                                                   onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.MAWTO_ARTICLE_IDS)}
-                                                   backgroundColor={'#F6F6EF'}
-                                                   loadMoreText={'Load More...'}
-                                                   style={styles.listview}/>
+<RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Top Story')}
+                     onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.MAWTO_ARTICLE_IDS)}
+                     backgroundColor={'#537780'}
+                     loadMoreText={'Load More...'}
+                     style={styles.listview}/>
     );
   },
   renderListViewRow: function(row, pushNavBarTitle){
       return(
-          <TouchableHighlight underlayColor={'#f3f3f2'}
+          <TouchableHighlight underlayColor={'#537780'}
                               onPress={()=>this.selectRow(row, pushNavBarTitle)}>
             <View style={styles.rowContainer}>
                 <View style={styles.rowDetailsContainer}>
@@ -45,6 +45,7 @@ module.exports = React.createClass({
                         {row.summaryshort}
                     </Text>
                     <Text style={styles.rowDetailsLine}>
+
                         Category: {row.category}
                     </Text>
                     <View style={styles.separator}/>
@@ -127,18 +128,18 @@ var styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 4,
         marginRight: 10,
-        color: '#FF6600'
+        color: '#11D3BC'
     },
     rowDetailsLine: {
         fontSize: 12,
         marginBottom: 10,
-        color: 'gray',
+        color: 'white'
     },
     listview: {
       marginBottom:0
     },
     separator: {
         height: 1,
-        backgroundColor: '#CCCCCC'
+        backgroundColor: '#FFFCCA'
     }
 });

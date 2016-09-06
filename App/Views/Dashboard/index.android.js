@@ -11,6 +11,7 @@ var {
 
 var ToolbarAndroid = require('ToolbarAndroid');
 
+var Post = require("../Post/index.android.js");
 var api = require("../../Network/api.js");
 
 var RefreshableListView = require("../../Components/RefreshableListView");
@@ -24,31 +25,31 @@ module.exports = React.createClass({
   },
   render: function(){
     return(
-      <View style={styles.container}>
+      <View style={{flex:1}}>
         <ToolbarAndroid style={styles.toolbar}
-                        title={'Top Stories'}
-                        titleColor={'#FFFFFF'}/>
-        <RefreshableListView renderRow={(row)=>this.renderListViewRow(row)}
-                             onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback)}
-                             backgroundColor={'#F6F6EF'}
-                             loadMoreText={'Load More...'}/>
+                        title={'MAWTO'}
+                        titleColor={'#11D3BC'}/>
+        <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Top Story')}
+                             onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.MAWTO_ARTICLE_IDS)}
+                             backgroundColor={'#537780'}/>
       </View>
     );
   },
-  renderListViewRow: function(row){
+  renderListViewRow: function(row, pushNavBarTitle){
       return(
-          <TouchableHighlight underlayColor={'#f3f3f2'}
-                              onPress={()=>this.selectRow(row)}>
+          <TouchableHighlight underlayColor={'#537780'}
+                              onPress={()=>this.selectRow(row, pushNavBarTitle)}>
             <View style={styles.rowContainer}>
-                <Text style={styles.rowCount}>
-                    {row.count}
-                </Text>
                 <View style={styles.rowDetailsContainer}>
                     <Text style={styles.rowTitle}>
                         {row.title}
                     </Text>
                     <Text style={styles.rowDetailsLine}>
-                        Posted by {row.by} | {row.score} Points | {row.descendants} Comments
+                        {row.summaryshort}
+                    </Text>
+                    <Text style={styles.rowDetailsLine}>
+
+                        Category: {row.category}
                     </Text>
                     <View style={styles.separator}/>
                 </View>
@@ -56,16 +57,20 @@ module.exports = React.createClass({
           </TouchableHighlight>
       );
   },
-  listViewOnRefresh: function(page, callback){
+  listViewOnRefresh: function(page, callback, api_endpoint){
       if (page != 1 && this.state.topStoryIDs){
           this.fetchStoriesUsingTopStoryIDs(this.state.topStoryIDs, this.state.lastIndex, 5, callback);
       }
       else {
-        fetch(api.HN_TOP_STORIES_ENDPOINT)
+        fetch(api_endpoint)
         .then((response) => response.json())
         .then((topStoryIDs) => {
-            this.fetchStoriesUsingTopStoryIDs(topStoryIDs, 0, 12, callback);
-            this.setState({topStoryIDs: topStoryIDs});
+            var articleIDs = [];
+            for(var i in topStoryIDs) {
+              articleIDs.push(topStoryIDs[i].id);
+            }
+            this.fetchStoriesUsingTopStoryIDs(articleIDs, 0, 12, callback);
+            this.setState({topStoryIDs: articleIDs});
         })
         .done();
       }
@@ -75,7 +80,7 @@ module.exports = React.createClass({
       var endIndex = (startIndex + amountToAdd) < topStoryIDs.length ? (startIndex + amountToAdd) : topStoryIDs.length;
       function iterateAndFetch(){
           if (startIndex < endIndex){
-              fetch(api.HN_ITEM_ENDPOINT+topStoryIDs[startIndex]+".json")
+              fetch(api.MAWTO_ARTICLE_SUMMARY_MAIN+topStoryIDs[startIndex])
               .then((response) => response.json())
               .then((topStory) => {
                   topStory.count = startIndex+1;
@@ -93,30 +98,24 @@ module.exports = React.createClass({
       iterateAndFetch();
       this.setState({lastIndex: endIndex});
   },
-  selectRow: function(row){
+  selectRow: function(row, pushNavBarTitle){
     this.props.navigator.push({
-      id: 'Post',
-      title: "Top Story #"+row.count,
-      post: row,
+      title: "",
+      component: Post,
+      passProps: {post: row},
+      backButtonTitle: 'Back',
     });
   }
-});
+  });
 
-var styles = StyleSheet.create({
-    container: {
-      flex: 1
-    },
-    toolbar: {
-      height: 56,
-      backgroundColor: '#FF6600'
-    },
+  var styles = StyleSheet.create({
     rowContainer:{
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
     },
     rowCount: {
-        fontSize: 20,
+        fontSize: 12,
         textAlign: 'right',
         color: 'gray',
         margin: 10,
@@ -124,6 +123,7 @@ var styles = StyleSheet.create({
     },
     rowDetailsContainer: {
         flex: 1,
+        margin: 10,
     },
     rowTitle: {
         fontSize: 15,
@@ -131,15 +131,18 @@ var styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 4,
         marginRight: 10,
-        color: '#FF6600'
+        color: '#11D3BC'
     },
     rowDetailsLine: {
         fontSize: 12,
         marginBottom: 10,
-        color: 'gray',
+        color: 'white'
+    },
+    listview: {
+      marginBottom:0
     },
     separator: {
         height: 1,
-        backgroundColor: '#CCCCCC'
-    } 
-});
+        backgroundColor: '#FFFCCA'
+    }
+  });

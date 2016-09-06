@@ -25,7 +25,7 @@ var Web = React.createClass({
   render: function() {
     return (
       <View style={{flex: 1}}>
-        <WebView source={{uri: this.props.url}}/>
+        <WebView  url={this.props.link} />
       </View>
     );
   }
@@ -34,7 +34,10 @@ var Web = React.createClass({
 module.exports = React.createClass({
   render: function(){
     var style = {};
-
+    if(!this.props.post.top_image)
+    {
+      this.props.post.top_image = 'http://mawto.com/img/mdot.png';
+    }
     return(
       <Image source={{uri: this.props.post.top_image}} style={styles.atomsContainer}>
     <View style={styles.promoView}>
@@ -43,7 +46,7 @@ module.exports = React.createClass({
                      onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback)}
                      backgroundColor={'transparent'}
                      loadMoreText={'Load More...'}/>
-           {this.renderSourceButton()}
+    {this.renderSourceButton()}
     </View>
       </Image>
 
@@ -52,18 +55,17 @@ module.exports = React.createClass({
   renderListViewRow: function(row){
   return(
     <View>
-      <View style={{backgroundColor: 'rgba(0,0,0,.6)', width: width}}>
+      <View style={{backgroundColor: 'transparent'}}>
+        <Text>
+        {"\n"}
+        </Text>
+      </View>
+      <View style={{backgroundColor: 'rgba(0,0,0,.4)', width: width}}>
         <Text style={{color: 'white', fontSize: 15, paddingLeft: 5, paddingRight:1}}>
          {row}
         </Text>
         </View>
-        <View style={{backgroundColor: 'transparent'}}>
-          <Text>
-          {"\n"}
-          </Text>
-        </View>
     </View>
-
   );
 },
 renderListViewHeader: function(){
@@ -75,7 +77,7 @@ renderListViewHeader: function(){
   </View>
   );
 },
-  renderSourceButton: function(){
+renderSourceButton: function(){
     if(!this.props.post.link){
       return null;
     }
@@ -91,47 +93,22 @@ renderListViewHeader: function(){
     );
   },
 
-  listViewOnRefresh: function(page, callback){
+listViewOnRefresh: function(page, callback){
     if(!this.props.post.summarylong){
       callback([], {allLoaded: true})
     }
     var atoms = [];
     if(this.props.post.summarylong){
-      for(var i in this.props.post.summarylong) {
+      for(var i = 0; i < this.props.post.summarylong.length; ++i) {
         atoms.push(this.props.post.summarylong[i])
       }
     callback(atoms, {allLoaded: true})
     }
   },
-  fetchCommentsUsingKids: function(kids, startIndex, amountToAdd, callback){
-    var rowsData = [];
-    var endIndex = (startIndex + amountToAdd) < kids.length ? (startIndex + amountToAdd) : kids.length;
-    function iterateAndFetch(){
-        if (startIndex < endIndex){
-            fetch(api.HN_ITEM_ENDPOINT+kids[startIndex]+".json")
-            .then((response) => response.json())
-            .then((item) => {
-                item.count = startIndex+1;
-                if(!item.deleted){
-                  rowsData.push(item);
-                }
-                startIndex++;
-                iterateAndFetch();
-            })
-            .done();
-        }
-        else {
-            callback(rowsData, {allLoaded: endIndex==kids.length});
-            return;
-        }
-    }
-    iterateAndFetch();
-    this.setState({lastIndex: endIndex});
-  },
-  pushSourceWebpage: function(){
+pushSourceWebpage: function(){
   	this.props.navigator.push({
   		title: this.props.post.title,
-  		passProps: {url: this.props.post.link},
+  		passProps: {link: this.props.post.link},
   		component: Web
     });
   },
@@ -148,35 +125,32 @@ renderListViewHeader: function(){
 
 var styles = StyleSheet.create({
   headerContainer: {
-    flex:1,
+    alignItems: 'flex-start',
     paddingRight: 10,
     paddingLeft: 10,
     paddingBottom: 20,
     paddingTop: 5,
+    backgroundColor: 'rgba(0,0,0,.5)',
   },
   atomsContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
     flex: 1,
-    // remove width and height to override fixed static size
     width: null,
     height: null,
-  },
-  pageStyle: {
-    width: width,
-    height: height
   },
   atomsTitle:{
     fontSize: 20,
     textAlign: 'center',
-    color: '#FF6600',
+    color: '#11D3BC',
   },
   atomsBackground:{
-    backgroundColor: 'rgba(0,0,0,.6)',
+    backgroundColor: 'rgba(0,0,0,.4)',
     margin: 5,
   },
   atomsPostText:{
+    backgroundColor: 'rgba(0,0,0,.5)',
     color: 'white',
     fontSize: 15,
   },
@@ -187,5 +161,7 @@ var styles = StyleSheet.create({
   },
 promoView: {
   backgroundColor: 'transparent',
+  width: width,
+  height: height,
 },
 })

@@ -1,9 +1,8 @@
 /*
  * Component Name: RefreshableListView
- * Author: Simar Singh (github/iSimar)
  * Description: This component is used to render a listview that can be
  *              pulled down to refresh
- * 
+ *
  * Dependencies:
  *  -> react-native-gifted-listview 0.0.7 (https://github.com/FaridSafi/react-native-gifted-listview)
  *
@@ -19,14 +18,14 @@
  *      default = '+', text used at the end of the listview - pagination
  *  -> renderHeader (optional)
  *      rendering not sticky header of the listview
- *  
+ *
  * Example:
  *  <RefreshableListView renderRow={(row)=>this.renderListViewRow(row)}
  *                       renderHeader={this.renderListViewHeader}
  *                       onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback)}
  *                       backgroundColor={'#F6F6EF'}
  *                       loadMoreText={'Load More...'}/>
- *  
+ *
  */
 var React = require('react-native');
 
@@ -122,6 +121,6 @@ var styles = StyleSheet.create({
     },
     loadMoreText: {
         fontSize: 15,
-        color: 'gray',
+        color: 'white',
     }
 });

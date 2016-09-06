@@ -10,12 +10,13 @@ var {
 
 var Dashboard = require('./App/Views/Dashboard/index.ios.js');
 
-var HackerNews = React.createClass({
+var Mawto = React.createClass({
   render: function() {
     return (
       <NavigatorIOS
         style={styles.container}
-        tintColor='#FF6600'
+        tintColor='#11D3BC'
+        barTintColor='#537780'
         initialRoute={{
           title: 'MAWTO',
           component: Dashboard,
@@ -27,10 +28,10 @@ var HackerNews = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F6F6EF',
+    backgroundColor: '#11D3BC',
   },
 });
 
-AppRegistry.registerComponent('HackerNews', () => HackerNews);
+AppRegistry.registerComponent('Mawto', () => Mawto);
 
-module.exports = HackerNews;
+module.exports = Mawto;

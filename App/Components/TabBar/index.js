@@ -1,8 +1,7 @@
 /*
  * Component Name: TabBar
- * Author: Simar Singh (github/iSimar)
  * Description: This component is used for render a TabBar
- * 
+ *
  * Dependencies:
  *  -> react-native-vector-icons 1.0.3 (https://github.com/oblador/react-native-vector-icons)
  *      - This library is used for fontawesome icons on the TabBar. For iOS only use
@@ -44,7 +43,7 @@ module.exports = React.createClass({
         return(
             <TabBarIOS tintColor={this.state.activeTintColor}
             		   translucent={true}>
-            	{this.state.structure.map((tabProps, tabIndex) => 
+            	{this.state.structure.map((tabProps, tabIndex) =>
             		<Icon.TabBarItem title={tabProps.title}
             						 iconName={tabProps.iconName}
             						 iconSize={this.state.iconSize}

@@ -1,0 +1,68 @@
+TASK com.mawto id=24
+  ACTIVITY com.mawto/.MainActivity 68263da pid=30071
+    Local Activity 8e5a11d State:
+      mResumed=true mStopped=false mFinished=false
+      mChangingConfigurations=false
+      mCurrentConfig={1.0 310mcc260mnc en_US ldltr sw411dp w411dp h659dp 560dpi nrml port finger -keyb/v/h -nav/h s.6}
+      mLoadersStarted=true
+      FragmentManager misc state:
+        mHost=android.app.Activity$HostCallbacks@5bfc246
+        mContainer=android.app.Activity$HostCallbacks@5bfc246
+        mCurState=5 mStateSaved=false mDestroyed=false
+    ViewRoot:
+      mAdded=true mRemoved=false
+      mConsumeBatchedInputScheduled=false
+      mConsumeBatchedInputImmediatelyScheduled=false
+      mPendingInputEventCount=0
+      mProcessInputEventsScheduled=false
+      mTraversalScheduled=false
+      android.view.ViewRootImpl$NativePreImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$ImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$NativePostImeInputStage: mQueueLength=0
+    Choreographer:
+      mFrameScheduled=true
+      mLastFrameTime=6273766 (11 ms ago)
+    View Hierarchy:
+      com.android.internal.policy.PhoneWindow$DecorView{7fb3c07 V.E...... R....... 0,0-1440,2560}
+        android.widget.LinearLayout{6ace134 V.E...... ........ 0,0-1440,2392}
+          android.view.ViewStub{671eb5d G.E...... ......I. 0,0-0,0 #10203a9 android:id/action_mode_bar_stub}
+          android.widget.FrameLayout{b25bcd2 V.E...... ........ 0,84-1440,2392 #1020002 android:id/content}
+            com.facebook.react.ReactRootView{b0591a3 V.E...... ........ 0,0-1440,2308 #1}
+              com.facebook.react.views.view.ReactViewGroup{ad0dca0 V.E...... ........ 0,0-1440,2308 #4}
+                com.facebook.react.views.view.ReactViewGroup{1e6e059 V.E...... ........ 0,0-1440,2308 #5}
+                  com.facebook.react.views.view.ReactViewGroup{57ed41e V.E...... ........ 0,0-1440,2308 #6}
+                    com.facebook.react.views.toolbar.ReactToolbar{8d5a4ff V.E...... ........ 0,0-1440,0 #8}
+                      android.widget.TextView{77722cc V.ED..... ......ID 56,14-315,14}
+                    com.facebook.react.views.view.ReactViewGroup{1c2915 V.E...... ........ 0,0-1440,2308 #9}
+                      com.facebook.react.views.scroll.ReactScrollView{bc0142a VFED.V... ........ 0,0-1440,2308 #c}
+                        com.facebook.react.views.view.ReactViewGroup{969921b V.E...... ........ 0,0-1440,5962 #d}
+                          com.facebook.react.views.view.ReactViewGroup{8599fb8 VFE...... ........ 0,0-1440,427 #13}
+                            com.facebook.react.views.text.ReactTextView{d234191 V.ED..... ........ 35,70-1370,141 #17}
+                            com.facebook.react.views.text.ReactTextView{d2348f6 V.ED..... ........ 35,155-1405,261 #19}
+                            com.facebook.react.views.text.ReactTextView{c8534f7 V.ED..... ........ 35,296-1405,353 #1b}
+                            com.facebook.react.views.view.ReactViewGroup{8e4ff64 V.E...... ........ 35,388-1405,392 #1e}
+                          com.facebook.react.views.view.ReactViewGroup{aa965cd VFE...... ........ 0,427-1440,915 #23}
+                            com.facebook.react.views.text.ReactTextView{b2fe82 V.ED..... ........ 35,70-1370,203 #26}
+                            com.facebook.react.views.text.ReactTextView{4e2993 V.ED..... ........ 35,217-1405,323 #28}
+                            com.facebook.react.views.text.ReactTextView{ca4add0 V.ED..... ........ 35,358-1405,415 #2b}
+                            com.facebook.react.views.view.ReactViewGroup{df391c9 V.E...... ........ 35,450-1405,453 #2e}
+                          com.facebook.react.views.view.ReactViewGroup{19680ce VFE...... ........ 0,915-1440,1404 #2f}
+                            com.facebook.react.views.text.ReactTextView{5a7cbef V.ED..... ........ 35,70-1370,203 #32}
+                            com.facebook.react.views.text.ReactTextView{26ed6fc V.ED..... ........ 35,217-1405,323 #35}
+                            com.facebook.react.views.text.ReactTextView{19a8185 V.ED..... ........ 35,358-1405,415 #37}
+                            com.facebook.react.views.view.ReactViewGroup{41ddbda V.E...... ........ 35,450-1405,454 #3a}
+                          com.facebook.react.views.view.ReactViewGroup{e4f380b VFE...... ........ 0,1404-1440,1843 #3b}
+                            com.facebook.react.views.text.ReactTextView{e5066e8 V.ED..... ........ 35,70-1370,203 #3f}
+                            com.facebook.react.views.text.ReactTextView{706b101 V.ED..... ........ 35,217-1405,274 #41}
+                            com.facebook.react.views.text.ReactTextView{f8ddba6 V.ED..... ........ 35,309-1405,366 #43}
+                            com.facebook.react.views.view.ReactViewGroup{b749e7 V.E...... ........ 35,401-1405,404 #46}
+                          com.facebook.react.views.view.ReactViewGroup{6390994 VFE...... ........ 0,1843-1440,2332 #48}
+                            com.facebook.react.views.text.ReactTextView{3ac5c3d V.ED..... ........ 35,70-1370,203 #4b}
+                            com.facebook.react.views.text.ReactTextView{8ac0c32 V.ED..... ........ 35,217-1405,323 #4d}
+                            com.facebook.react.views.text.ReactTextView{da49d83 V.ED..... ........ 35,358-1405,415 #4f}
+                            com.facebook.react.views.view.ReactViewGroup{d672b00 V.E...... ........ 35,450-1405,454 #53}
+        android.view.View{6077f39 V.ED..... ........ 0,2392-1440,2560 #1020030 android:id/navigationBarBackground}
+        android.view.View{90ab97e V.ED..... ........ 0,0-1440,84 #102002f android:id/statusBarBackground}
+    Looper (main, tid 1) {3898edf}
+      Message 0: { when=+1s254ms callback=com.facebook.react.devsupport.DevServerHelper$4$1 target=android.os.Handler }
+      (Total messages: 1, polling=false, quitting=false)

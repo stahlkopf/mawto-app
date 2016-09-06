@@ -23,12 +23,12 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
   return true;
 });
 
-var HackerNews = React.createClass({
+var Mawto = React.createClass({
   render: function() {
     return (
       <Navigator
         style={styles.container}
-        tintColor='#FF6600'
+        tintColor='#11D3BC'
         initialRoute={{id: 'Dashboard'}}
         renderScene={this.navigatorRenderScene}/>
     );
@@ -53,6 +53,6 @@ var styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('HackerNews', () => HackerNews);
+AppRegistry.registerComponent('Mawto', () => Mawto);
 
-module.exports = HackerNews;
+module.exports = Mawto;
